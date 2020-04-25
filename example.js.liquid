@@ -1,0 +1,51 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.stock-button').click(function(){
+      $(this).text(($(this).text() == 'All Out of Stock') ? 'All In Stock' : 'All Out of Stock');
+      $(this).toggleClass('outofstock');
+      if ($(this).text() == 'All In Stock') {
+        $('.grid-item[data-sort=2]').hide();
+        $('.grid-item[data-sort=1]').show();
+      } else if ($(this).text() == 'All Out of Stock') {
+        $('.grid-item[data-sort=2]').show();
+        $('.grid-item[data-sort=1]').hide();
+      }
+    });
+    if ($('.stock-button').text() == 'All In Stock') {
+      $('.grid-item[data-sort=2]').hide();
+      $('.grid-item[data-sort=1]').show();
+    } else if ($('.stock-button').text() == 'All Out of Stock') {
+      $('.grid-item[data-sort=2]').show();
+      $('.grid-item[data-sort=1]').hide();
+    }
+    var $wrapper = $('.collection-template-section .grid-uniform');
+    $wrapper.find('.grid-item').sort(function (a, b) {
+      return +a.dataset.sort - +b.dataset.sort;
+    }).appendTo($wrapper);
+    $(window).scroll(function() {
+      var hT = $('.magik-infi-loader').offset().top,
+          hH = $('.magik-infi-loader').outerHeight(),
+          wH = $(window).height(),
+          wS = $(this).scrollTop();
+      console.log((hT-wH) , wS);
+      if (wS > (hT+hH-wH)){
+        scrollHandler();
+      }
+    });
+    function scrollHandler() {
+      setTimeout(function(){
+        var $wrapper = $('.collection-template-section .grid-uniform');
+        $wrapper.find('.grid-item').sort(function (a, b) {
+          return +a.dataset.sort - +b.dataset.sort;
+        }).appendTo($wrapper);
+      }, 3000);
+      if ($('.stock-button').text() == 'All In Stock') {
+        $('.grid-item[data-sort=2]').hide();
+        $('.grid-item[data-sort=1]').show();
+      } else if ($('.stock-button').text() == 'All Out of Stock') {
+        $('.grid-item[data-sort=2]').show();
+        $('.grid-item[data-sort=1]').hide();
+      }
+    }
+  });
+</script>
